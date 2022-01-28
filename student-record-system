@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct stu
+{
+    int rollno;
+    char name[100];
+    int marks;
+};
+
+void insert_data (struct stu[], int);
+void display (struct stu[], int);
+void search (struct stu[], int, int);
+void top (struct stu[], int);
+
+int main()
+{
+    struct stu info[100];
+    int n, choice, rollno;
+
+    printf("Number of students : ");
+    scanf("%d", &n);
+    insert_data(info, n);
+    do
+    {
+
+        printf("\n Result :\n");
+        printf(" 1.display the info of students.\n");
+        printf(" 2.search for student.\n");
+        printf(" 3.display toppers in the class.\n");
+        printf(" 0 .exit\n");
+        printf("\n give your choice : ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+            case 1:
+                display(info, n);
+                   break;
+            case 2:
+                printf("\n Enter students roll number: ");
+                scanf("%d", &rollno);
+                search(info, n, rollno);
+                break;
+            case 3:
+                top(info, n);
+                break;
+            default:printf("please give your choice again");
+        }
+    }
+    while (choice != 0);
+
+    return 0;
+}
+
+void insert_data(struct stu list[100], int s)
+{
+    int i=0;
+    while(i<s)
+{
+        printf("\n %d student data", i + 1);
+
+        printf("\n  roll number : ");
+        scanf("%d", &list[i].rollno);
+        fflush(stdin);
+        printf("name : ");
+        scanf("%s",&list[i].name);
+
+        printf(" marks : ");
+        scanf("%d", &list[i].marks);
+i++;
+    }
+}
+
+void display(struct stu list[100], int s)
+{
+    int j;
+
+    printf("\n\n Rollnumber\tName\tMarks\n");
+    for (j = 0; j< s; j++)
+    {
+        printf("%d\t%s\t%d\n",list[j].rollno,list[j].name,list[j].marks);
+    }
+}
+
+void search(struct stu list[100], int s, int number)
+{
+    int j;
+
+    for (j = 0; j < s; j++)
+    {
+        if (list[j].rollno == number)
+        {
+            printf("Rollnumber = %d\nName = %s\nMarks = %d\n", list[j].rollno,
+                list[j].name, list[j].marks);
+            return ;
+        }
+    }
+    printf("Record is not Found\n");
+}
+
+int findMax(struct stu list[], int s)
+{
+    int i=1, maxi;
+
+    maxi = list[0].marks;
+  while(i<s){
+
+        if (list[i].marks > maxi)
+        {
+            maxi = list[i].marks;
+        }
+i++;
+    }
+    return maxi;
+}
+
+void top(struct stu list[], int s)
+{
+    int i;
+    for (i = 0; i < s; i++)
+    {
+        if (list[i].marks == findMax(list, s))
+        {
+            printf("the topper of the class is: %s\n", list[i].name);
+        }
+    }
+}
